@@ -16,8 +16,7 @@ model_run<-function(model_input = NULL)
     return(as.list(results))
   }
 
-  if(method=="evppi"){
-    input<-unflatten_list(model_input)
+  if(model_input$method=="evppi"){
 
     results <- evppi         (outputs                        =model_input$outputs,
                               inputs                         =model_input$inputs,
@@ -32,8 +31,7 @@ model_run<-function(model_input = NULL)
     return(as.list(results))
   }
 
-  if(method=="evppi_mc"){
-    input<-unflatten_list(model_input)
+  if(model_input$method=="evppi_mc"){
 
     results <- evppi_mc      (model_fn                       =model_input$model_fn,
                               par_fn                         =model_input$par_fn,
@@ -47,8 +45,7 @@ model_run<-function(model_input = NULL)
     return(as.list(results))
   }
 
-  if(method=="evsi"){
-    input<-unflatten_list(model_input)
+  if(model_input$method=="evsi"){
 
     results <- evsi          (outputs                        =model_input$outputs,
                               inputs                         =model_input$inputs,
@@ -70,8 +67,7 @@ model_run<-function(model_input = NULL)
     return(as.list(results))
   }
 
-  if(method=="evsivar"){
-    input<-unflatten_list(model_input)
+  if(model_input$method=="evsivar"){
 
     results <- evsivar       (outputs                        =model_input$outputs,
                               inputs                         =model_input$inputs,
@@ -95,19 +91,3 @@ model_run<-function(model_input = NULL)
 
 }
 
-#Gets a hierarchical named list and flattens it; updating names accordingly
-unflatten_list<-function(lst)
-{
-  if(is.null(lst)) return(lst)
-  out<-list()
-
-  nms<-names(lst)
-
-  for(nm in nms)
-  {
-    path<-paste(strsplit(nm,'.',fixed=T)[[1]],sep="$")
-    eval(parse(text=paste("out$",paste(path,collapse="$"),"<-lst[[nm]]",sep="")))
-  }
-
-  return(out)
-}
