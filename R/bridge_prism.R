@@ -6,10 +6,9 @@
 #' @export
 #'
 #' @examples
-model_run<-function(model_input = NULL, method)
+model_run<-function(model_input = NULL)
 {
-  if(method=="evpi"){
-    input<-unflatten_list(model_input)
+  if(model_input$method=="evpi"){
 
     results <- evpi         (outputs                        =model_input$outputs,
                              nsim                           =model_input$nsim)
