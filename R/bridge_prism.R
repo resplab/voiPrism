@@ -26,7 +26,7 @@ model_run<-function(model_input = NULL)
                               B                              =model_input$B,
                               nsim                           =model_input$nsim,
                               verbos                         =model_input$verbos,
-                              ...                            =model_input$...)
+                              ...                            =model_input$etc)
 
     return(as.list(results))
   }
