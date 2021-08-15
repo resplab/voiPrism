@@ -20,14 +20,13 @@ model_run<-function(model_input = NULL)
 
     args <- list(outputs                        =model_input$outputs,
                  inputs                         =model_input$inputs,
-                 pars                           =model_input$pars,
                  method                         =model_input$method,
                  se                             =model_input$se,
                  B                              =model_input$B,
                  nsim                           =model_input$nsim,
                  verbos                         =model_input$verbos)
 
-    results <- do.call(evppi, c(args,model_input$etc))
+    results <- do.call(evppi, c(args, model_input$pars, model_input$etc))
 
     return(as.list(results))
   }
@@ -71,7 +70,7 @@ model_run<-function(model_input = NULL)
 
   if(model_input$func=="evsivar"){
 
-    args <- list(outputs                        =model_input$outputs,
+    args <- list(outputs                       =model_input$outputs,
                 inputs                         =model_input$inputs,
                 study                          =model_input$study,
                 datagen_fn                     =model_input$datagen_fn,
