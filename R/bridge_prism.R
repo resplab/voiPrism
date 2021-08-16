@@ -17,7 +17,9 @@ model_run<-function(model_input = NULL)
   }
 
   if(model_input$func=="evppi"){
-
+    model_input$se <- FALSE
+    model_input$B <- 500
+    model_input$verbose <- FALSE
     args <- list(outputs                        =model_input$outputs,
                  inputs                         =model_input$inputs,
                  pars                           =model_input$pars,
@@ -25,7 +27,7 @@ model_run<-function(model_input = NULL)
                  se                             =model_input$se,
                  B                              =model_input$B,
                  nsim                           =model_input$nsim,
-                 verbos                         =model_input$verbos)
+                 verbose                        =model_input$verbose)
 
     results <- do.call(evppi, c(args, model_input$etc))
 
@@ -33,7 +35,7 @@ model_run<-function(model_input = NULL)
   }
 
   if(model_input$func=="evppi_mc"){
-
+    model_input$verbose <- FALSE
     results <- evppi_mc      (model_fn                       =model_input$model_fn,
                               par_fn                         =model_input$par_fn,
                               pars                           =model_input$pars,
@@ -41,13 +43,16 @@ model_run<-function(model_input = NULL)
                               ninner                         =model_input$ninner,
                               wtp                            =model_input$wtp,
                               mfargs                         =model_input$mfargs,
-                              verbos                         =model_input$verbos)
+                              verbose                        =model_input$verbose)
 
     return(as.list(results))
   }
 
   if(model_input$func=="evsi"){
-
+    model_input$n <- 100
+    model_input$Q <- 30
+    model_input$npreg_method <- "gam"
+    model_input$verbose <- FALSE
     args <- list(outputs                        =model_input$outputs,
                  inputs                         =model_input$inputs,
                  study                          =model_input$study,
@@ -62,7 +67,7 @@ model_run<-function(model_input = NULL)
                  Q                              =model_input$Q,
                  npreg_method                   =model_input$npreg_method,
                  nsim                           =model_input$nsim,
-                 verbos                         =model_input$verbos)
+                 verbose                        =model_input$verbose)
 
     results <- do.call(evsi, c(args, model_input$etc))
 
@@ -70,7 +75,10 @@ model_run<-function(model_input = NULL)
   }
 
   if(model_input$func=="evsivar"){
-
+    model_input$n <- 100
+    model_input$Q <- 30
+    model_input$npreg_method <- "gam"
+    model_input$verbose <- TRUE
     args <- list(outputs                       =model_input$outputs,
                  inputs                        =model_input$inputs,
                  study                         =model_input$study,
@@ -85,51 +93,10 @@ model_run<-function(model_input = NULL)
                  Q                             =model_input$Q,
                  npreg_method                  =model_input$npreg_method,
                  nsim                          =model_input$nsim,
-                 verbos                        =model_input$verbos)
+                 verbose                       =model_input$verbose)
     results <- do.call(evsivar, c(args, model_input$etc))
 
     return(as.list(results))
   }
 
 }
-
-get_default_input <- function() {
-  model_input <- list(pars                                 =NULL,
-                      method                               =NULL,
-                      se                                   =FALSE,
-                      B                                    =500,
-                      nsim                                 =NULL,
-                      verbose                              =FALSE)
-  return((flatten_list(model_input)))
-}
-
-
-#Gets a hierarchical named list and flattens it; updating names accordingly
-flatten_list<-function(lst,prefix="")
-{
-  if(is.null(lst)) return(lst)
-  out<-list()
-  if(length(lst)==0)
-  {
-    out[prefix]<-NULL
-    return(out)
-  }
-
-  for(i in 1:length(lst))
-  {
-    nm<-names(lst[i])
-
-    message(nm)
-
-    if(prefix!="")  nm<-paste(prefix,nm,sep=".")
-
-    if(is.list(lst[[i]]))
-      out<-c(out,flatten_list(lst[[i]],nm))
-    else
-    {
-      out[nm]<-lst[i]
-    }
-  }
-  return(out)
-}
-
