@@ -17,9 +17,9 @@ model_run<-function(model_input = NULL)
   }
 
   if(model_input$func=="evppi"){
-    model_input$se <- FALSE
-    model_input$B <- 500
-    model_input$verbose <- FALSE
+    if (model_input$se is NULL) {model_input$se <- FALSE}
+    if (model_input$B is NULL) {model_input$B <- 500}
+    if (model_input$verbose is NULL) {model_input$verbose <- FALSE}
     args <- list(outputs                        =model_input$outputs,
                  inputs                         =model_input$inputs,
                  pars                           =model_input$pars,
@@ -35,7 +35,7 @@ model_run<-function(model_input = NULL)
   }
 
   if(model_input$func=="evppi_mc"){
-    model_input$verbose <- FALSE
+    if (model_input$verbose is NULL) {model_input$verbose <- FALSE}
     results <- evppi_mc      (model_fn                       =model_input$model_fn,
                               par_fn                         =model_input$par_fn,
                               pars                           =model_input$pars,
@@ -49,10 +49,10 @@ model_run<-function(model_input = NULL)
   }
 
   if(model_input$func=="evsi"){
-    model_input$n <- 100
-    model_input$Q <- 30
-    model_input$npreg_method <- "gam"
-    model_input$verbose <- FALSE
+    if(model_input$n is NULL) {model_input$n <- 100}
+    if(model_input$Q is NULL) {model_input$Q<- 30}
+    if(model_input$npreg_method is NULL) {model_input$npreg_method <- "gam"}
+    if(model_input$verbose is NULL) {model_input$verbose <- FALSE}
     args <- list(outputs                        =model_input$outputs,
                  inputs                         =model_input$inputs,
                  study                          =model_input$study,
@@ -75,10 +75,10 @@ model_run<-function(model_input = NULL)
   }
 
   if(model_input$func=="evsivar"){
-    model_input$n <- 100
-    model_input$Q <- 30
-    model_input$npreg_method <- "gam"
-    model_input$verbose <- TRUE
+    if(model_input$n is NULL) {model_input$n<- 100}
+    if(model_input$Q is NULL) {model_input$Q <- 30}
+    if(model_input$npreg_method is NULL) {model_input$npreg_method <- "gam"}
+    if(model_input$verbose is NULL) {model_input$verbose <- TRUE}
     args <- list(outputs                       =model_input$outputs,
                  inputs                        =model_input$inputs,
                  study                         =model_input$study,
