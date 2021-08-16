@@ -72,25 +72,64 @@ model_run<-function(model_input = NULL)
   if(model_input$func=="evsivar"){
 
     args <- list(outputs                       =model_input$outputs,
-                inputs                         =model_input$inputs,
-                study                          =model_input$study,
-                datagen_fn                     =model_input$datagen_fn,
-                pars                           =model_input$pars,
-                n                              =model_input$n,
-                method                         =model_input$method,
-                likelihood                     =model_input$likelihood,
-                analysis_model                 =model_input$analysis_model,
-                analysis_options               =model_input$analysis_options,
-                decision_model                 =model_input$decision_model,
-                Q                              =model_input$Q,
-                npreg_method                   =model_input$npreg_method,
-                nsim                           =model_input$nsim,
-                verbos                         =model_input$verbos)
-
+                 inputs                        =model_input$inputs,
+                 study                         =model_input$study,
+                 datagen_fn                    =model_input$datagen_fn,
+                 pars                          =model_input$pars,
+                 n                             =model_input$n,
+                 method                        =model_input$method,
+                 likelihood                    =model_input$likelihood,
+                 analysis_model                =model_input$analysis_model,
+                 analysis_options              =model_input$analysis_options,
+                 decision_model                =model_input$decision_model,
+                 Q                             =model_input$Q,
+                 npreg_method                  =model_input$npreg_method,
+                 nsim                          =model_input$nsim,
+                 verbos                        =model_input$verbos)
     results <- do.call(evsivar, c(args, model_input$etc))
 
     return(as.list(results))
   }
 
+}
+
+get_default_input <- function() {
+  model_input <- list(pars                                 =NULL,
+                      method                               =NULL,
+                      se                                   =FALSE,
+                      B                                    =500,
+                      nsim                                 =NULL,
+                      verbose                              =FALSE)
+  return((flatten_list(model_input)))
+}
+
+
+#Gets a hierarchical named list and flattens it; updating names accordingly
+flatten_list<-function(lst,prefix="")
+{
+  if(is.null(lst)) return(lst)
+  out<-list()
+  if(length(lst)==0)
+  {
+    out[prefix]<-NULL
+    return(out)
+  }
+
+  for(i in 1:length(lst))
+  {
+    nm<-names(lst[i])
+
+    message(nm)
+
+    if(prefix!="")  nm<-paste(prefix,nm,sep=".")
+
+    if(is.list(lst[[i]]))
+      out<-c(out,flatten_list(lst[[i]],nm))
+    else
+    {
+      out[nm]<-lst[i]
+    }
+  }
+  return(out)
 }
 
