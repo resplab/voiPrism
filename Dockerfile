@@ -10,3 +10,4 @@ RUN R -e 'remotes::install_github("resplab/voi")'
 RUN R -e 'remotes::install_github("resplab/voiPrism")'
 RUN chmod +x /usr/local/lib/R/site-library/INLA/bin/linux/64bit/fmesher.run
 RUN echo "opencpu:opencpu" | chpasswd
+USER root
