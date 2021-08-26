@@ -8,5 +8,6 @@ RUN R -e 'remotes::install_version("ldr", version = "1.3.3", repos = "http://cra
 RUN R -e 'install.packages("INLA",repos=c(getOption("repos"),INLA="https://inla.r-inla-download.org/R/testing"), dep=TRUE)'
 RUN R -e 'remotes::install_github("resplab/voi")'
 RUN R -e 'remotes::install_github("resplab/voiPrism")'
-RUN echo  "{\"timelimit.post\":18000}" >  /etc/opencpu/server.conf.d/timeoverride.conf
+RUN chmod +x /usr/local/lib/R/site-library/INLA/bin/linux/64bit/fmesher.run
 RUN echo "opencpu:opencpu" | chpasswd
+USER root
