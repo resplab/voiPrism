@@ -1,6 +1,6 @@
 Package: voiPrism
 Title: What the Package Does (One Line, Title Case)
-Version: 0.0.91
+Version: 0.0.92
 Authors@R: 
     person(given = "First",
            family = "Last",
@@ -16,8 +16,7 @@ Imports:
     voi,
     jsonlite,
     tibble,
-    dplyr,
-    unix
+    dplyr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Suggests: 
