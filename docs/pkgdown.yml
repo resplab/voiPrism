@@ -2,6 +2,6 @@ pandoc: 2.9.2.1
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  my-vignette: my-vignette.html
-last_built: 2021-08-26T18:59Z
+  voi_peermodels: voi_peermodels.html
+last_built: 2021-08-27T17:56Z
 
