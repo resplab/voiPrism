@@ -34,6 +34,20 @@ model_run<-function(model_input = NULL)
     return(as.list(results))
   }
 
+  if(model_input$func=="evppivar"){
+    if (is.null(model_input$verbose)) {model_input$verbose <- TRUE}
+    args <- list(outputs                        =model_input$outputs,
+                 inputs                         =model_input$inputs,
+                 pars                           =model_input$pars,
+                 method                         =model_input$method,
+                 nsim                           =model_input$nsim,
+                 verbose                        =model_input$verbose)
+
+    results <- do.call(evppivar, c(args, model_input$etc))
+
+    return(as.list(results))
+  }
+
   if(model_input$func=="evppi_mc"){
     if (is.null(model_input$verbose)) {model_input$verbose <- FALSE}
     results <- evppi_mc      (model_fn                       =eval(parse(text=model_input$model_fn)),
@@ -59,6 +73,7 @@ model_run<-function(model_input = NULL)
                  datagen_fn                     =eval(parse(text=model_input$datagen_fn)),
                  pars                           =model_input$pars,
                  n                              =model_input$n,
+                 aux_pars                       =model_input$aux_pars,
                  method                         =model_input$method,
                  likelihood                     =eval(parse(text=model_input$likelihood)),
                  analysis_model                 =model_input$analysis_model,
@@ -85,6 +100,7 @@ model_run<-function(model_input = NULL)
                  datagen_fn                    =eval(parse(text=model_input$datagen_fn)),
                  pars                          =model_input$pars,
                  n                             =model_input$n,
+                 aux_pars                      =model_input$aux_pars,
                  method                        =model_input$method,
                  likelihood                    =eval(parse(text=model_input$likelihood)),
                  analysis_model                =model_input$analysis_model,
