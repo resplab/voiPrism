@@ -8,6 +8,18 @@
 #' @examples
 model_run<-function(model_input = NULL)
 {
+
+  clean_up_list<-function(lst)
+  {
+    browser()
+    for(nm in names(lst))
+    {
+      if(is.list(lst[[nm]]) & length(lst[[nm]])==0) {lst[nm]<-list(NULL)}
+    }
+    lst
+  }
+  model_input <- clean_up_list(model_input)
+
   if(model_input$func=="evpi"){
 
     results <- evpi         (outputs                        =model_input$outputs,
