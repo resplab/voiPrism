@@ -1,4 +1,4 @@
-FROM opencpu/base
+FROM opencpu/base:v2.2.7
 RUN apt-get -y install libudunits2-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev libv8-dev libcairo2-dev libnetcdf-dev libgmp-dev
 RUN R -e 'install.packages("rgdal")'
 RUN R -e 'install.packages("reg")'
